@@ -22,10 +22,11 @@ public class BankController {
         this.bankAccountSourceWrapper = bankAccountSourceWrapper;
     }
 
-    public List<BankAccountBalance> printBalances() {
+    public List<BankAccountBalance> printBalances(Long accountId) {
         System.out.println("Implement me to pull balance information from all available bank integrations and display them, one after the other.");
 
-        return bankAccountSourceWrapper.getAccountBalances(1);
+        List<BankAccountBalance> accountBalances = bankAccountSourceWrapper.getAccountBalances(accountId);
+        return accountBalances;
     }
 
     public void printTransactions() {

@@ -22,7 +22,7 @@ public class BankControllerTest {
         BankAccountBalance bank1Balance = new BankAccountBalance(215.5d, "USD");
         BankAccountBalance bank2Balance = new BankAccountBalance(512.5d, "USD");
 
-        List<BankAccountBalance> bankAccountBalances = bankController.printBalances();
+        List<BankAccountBalance> bankAccountBalances = bankController.printBalances(1L);
 
         Assertions.assertThat(bankAccountBalances).isNotEmpty();
         Assertions.assertThat(bankAccountBalances).containsExactly(bank1Balance, bank2Balance);
