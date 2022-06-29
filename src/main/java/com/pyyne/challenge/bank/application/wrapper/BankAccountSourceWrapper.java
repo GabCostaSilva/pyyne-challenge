@@ -1,7 +1,7 @@
 package com.pyyne.challenge.bank.application.wrapper;
 
 import com.pyyne.challenge.bank.core.BankAccountBalance;
-import com.pyyne.challenge.bank.application.adapter.BankAccountSourceAdapter;
+import com.pyyne.challenge.bank.core.adapter.BankAccountSourceAdapter;
 import com.pyyne.challenge.bank.core.BankAccountTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
