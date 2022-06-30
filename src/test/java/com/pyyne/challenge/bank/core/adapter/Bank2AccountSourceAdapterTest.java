@@ -73,4 +73,12 @@ class Bank2AccountSourceAdapterTest {
                 .containsExactly(expectedTransactionTexts);
 
     }
+
+    @Test
+    void shouldGetTheBankCurrency() {
+
+        String accountCurrency = bank2AccountSourceAdapter.getAccountCurrency(1L);
+
+        Assertions.assertThat(accountCurrency).isEqualTo("USD");
+    }
 }

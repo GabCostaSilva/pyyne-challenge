@@ -36,6 +36,6 @@ public class Bank2AccountSourceAdapter implements BankAccountSourceAdapter {
 
     @Override
     public String getAccountCurrency(long accountId) {
-        return null;
+        return bank2AccountSource.getBalance(accountId).getCurrency();
     }
 }
