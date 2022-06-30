@@ -2,10 +2,8 @@ package com.pyyne.challenge.bank.core.adapter;
 
 import com.bank1.integration.Bank1AccountSource;
 import com.bank1.integration.Bank1Transaction;
-import com.bank2.integration.Bank2AccountTransaction;
 import com.pyyne.challenge.bank.core.BankAccountBalance;
 import com.pyyne.challenge.bank.core.BankAccountTransaction;
-import com.pyyne.challenge.bank.core.adapter.bank_source.Bank1AccountSourceAdapter;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,14 +5,12 @@ import com.bank2.integration.Bank2AccountSource;
 import com.bank2.integration.Bank2AccountTransaction;
 import com.pyyne.challenge.bank.core.BankAccountBalance;
 import com.pyyne.challenge.bank.core.BankAccountTransaction;
-import com.pyyne.challenge.bank.core.adapter.bank_source.Bank2AccountSourceAdapter;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Instant;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Run Tests
 
 on:
   [push]
