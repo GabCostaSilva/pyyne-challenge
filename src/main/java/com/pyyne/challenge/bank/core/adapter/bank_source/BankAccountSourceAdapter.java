@@ -1,4 +1,4 @@
-package com.pyyne.challenge.bank.core.adapter;
+package com.pyyne.challenge.bank.core.adapter.bank_source;
 
 import com.pyyne.challenge.bank.core.BankAccountBalance;
 import com.pyyne.challenge.bank.core.BankAccountTransaction;

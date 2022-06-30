@@ -1,4 +1,4 @@
-package com.pyyne.challenge.bank.core.adapter;
+package com.pyyne.challenge.bank.core.adapter.bank_source;
 
 import com.bank2.integration.Bank2AccountBalance;
 import com.bank2.integration.Bank2AccountSource;
@@ -19,7 +19,13 @@ public class Bank2AccountSourceAdapter implements BankAccountSourceAdapter {
 
     @Override
     public List<BankAccountTransaction> getTransactions(long accountId, Date fromDate, Date toDate) {
-        return null;
+        return bank2AccountSource
+                .getTransactions(accountId, fromDate, toDate)
+                .stream()
+                .map(bank2AccountTransaction -> new BankAccountTransaction(bank2AccountTransaction.getAmount(),
+                        bank2AccountTransaction.getType().name(),
+                        bank2AccountTransaction.getText()))
+                .toList();
     }
 
     @Override

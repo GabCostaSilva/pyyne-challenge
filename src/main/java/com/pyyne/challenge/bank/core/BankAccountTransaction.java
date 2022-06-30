@@ -1,4 +1,4 @@
 package com.pyyne.challenge.bank.core;
 
-public interface BankAccountTransaction {
+public record BankAccountTransaction(double amount, String transactionType, String text) {
 }
