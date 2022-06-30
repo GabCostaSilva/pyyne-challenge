@@ -1,6 +1,5 @@
 package com;
 
-
 import com.pyyne.challenge.bank.BankController;
 import com.pyyne.challenge.bank.core.BankAccountBalance;
 import com.pyyne.challenge.bank.core.BankAccountTransaction;

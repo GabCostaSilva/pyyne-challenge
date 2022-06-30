@@ -5,9 +5,13 @@ import com.bank1.integration.Bank1Transaction;
 import com.pyyne.challenge.bank.core.BankAccountBalance;
 import com.pyyne.challenge.bank.core.BankAccountTransaction;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.Instant;
 import java.util.Date;
@@ -16,31 +20,47 @@ import java.util.List;
 @SpringBootTest
 class Bank1AccountSourceAdapterTest {
 
-    @Autowired
-    Bank1AccountSourceAdapter bank1AccountSourceAdapter;
-    Bank1AccountSource bank1AccountSource = new Bank1AccountSource();
+    @MockBean
+    Bank1AccountSource bank1AccountSource;
+    Bank1AccountSourceAdapter bank1AccountSourceAdapter = new Bank1AccountSourceAdapter();
+    final double EXPECTED_BALANCE = 215.5d;
+    final long ACCOUNT_ID = 1L;
+    final String EXPECTED_CURRENCY = "USD";
+
+    @BeforeEach
+    void startUp() {
+        Mockito.when(bank1AccountSource.getAccountBalance(ACCOUNT_ID)).thenReturn(EXPECTED_BALANCE);
+        Mockito.when(bank1AccountSource.getAccountCurrency(ACCOUNT_ID)).thenReturn(EXPECTED_CURRENCY);
+    }
 
     @Test
     void shouldReturnBankAccountsBalancesFromExternalBankAccountId() {
-        long accountId = 1L;
-        Double accountBalance = bank1AccountSource.getAccountBalance(accountId);
-        String accountCurrency = bank1AccountSource.getAccountCurrency(accountId);
 
-        BankAccountBalance bankBalance = bank1AccountSourceAdapter.getAccountBalance(accountId);
+        BankAccountBalance bankBalance = bank1AccountSourceAdapter.getAccountBalance(ACCOUNT_ID);
 
         Assertions.assertThat(bankBalance).isNotNull();
-        Assertions.assertThat(bankBalance.balance()).isEqualTo(accountBalance);
-        Assertions.assertThat(bankBalance.currency()).isEqualTo(accountCurrency);
+        Assertions.assertThat(bankBalance.balance()).isEqualTo(EXPECTED_BALANCE);
+        Assertions.assertThat(bankBalance.currency()).isEqualTo(EXPECTED_CURRENCY);
+    }
+
+    @Test
+    void shouldReturnTheAccountCurrency() {
+
+        String currency = bank1AccountSourceAdapter.getAccountCurrency(ACCOUNT_ID);
+
+        Assertions.assertThat(currency).isEqualTo(EXPECTED_CURRENCY);
     }
 
     @Test
     void shouldReturnBankAccountsTransactions() {
-        long accountId = 1L;
         Date fromDate = Date.from(Instant.now());
         Date toDate = Date.from(Instant.now());
-        List<Bank1Transaction> expectedTransactions = bank1AccountSource.getTransactions(accountId, fromDate, toDate);
+        List<Bank1Transaction> expectedTransactions = List.of(new Bank1Transaction(100d, Bank1Transaction.TYPE_CREDIT, "Check deposit"),
+                new Bank1Transaction(25.5d, Bank1Transaction.TYPE_DEBIT, "Debit card purchase"),
+                new Bank1Transaction(225d, Bank1Transaction.TYPE_DEBIT, "Rent payment"));
+        Mockito.when(bank1AccountSource.getTransactions(ACCOUNT_ID, fromDate, toDate)).thenReturn(expectedTransactions);
 
-        List<BankAccountTransaction> transactions = bank1AccountSourceAdapter.getTransactions(accountId, fromDate, toDate);
+        List<BankAccountTransaction> transactions = bank1AccountSourceAdapter.getTransactions(ACCOUNT_ID, fromDate, toDate);
 
         String[] expectedTransactionTypes = expectedTransactions.stream()
                 .map(t -> String.valueOf(t.getType()))
